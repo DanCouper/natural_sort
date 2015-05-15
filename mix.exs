@@ -16,6 +16,8 @@ defmodule NaturalSort.Mixfile do
   end
 
   defp deps do
-    []
+    [
+      {:benchfella, "~> 0.2"}
+    ]
   end
 end
