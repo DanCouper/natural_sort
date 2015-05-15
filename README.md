@@ -1,9 +1,9 @@
 NaturalSort
 ===========
 
-Sort a list naturally.
+Sort a list of strings containing numbers in a natural manner.
 
-Sort functions will not, generally, sort strings containing
+Sort functions will not [generally] sort strings containing
 numbers the same way a human would.
 
 Given a list:
@@ -64,3 +64,8 @@ iex> NaturalSort.sort_desc(["a5", "a400", "a1"])
 was the inspiration, with that being based on
 [Martin Pool's natural sorting algorithm](http://sourcefrog.net/projects/natsort/), and making direct use of the Ruby implementation of the original
 C version.
+
+## Todo
+
+- Benchmark and optimise.
+- Set up as Hex package.
