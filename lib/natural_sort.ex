@@ -129,6 +129,8 @@ defmodule NaturalSort do
 
   defp isolate_initial_group(string) do
     Regex.run(~r/(\p{Nd}+|\p{L}+|\p{P}+)(.+|\z)/u, string, capture: :all_but_first)
+    # NOTE the regex may return zero-length strings
+    # depending upon context: the filter removes them
     |> Enum.filter(fn item -> item != "" end)
   end
 
