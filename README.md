@@ -65,6 +65,8 @@ was the inspiration, with that being based on
 [Martin Pool's natural sorting algorithm](http://sourcefrog.net/projects/natsort/), and making direct use of the Ruby implementation of the original
 C version.
 
+Elixir's [Version](https://github.com/elixir-lang/elixir/blob/v1.0.4/lib/elixir/lib/version.ex#L1) module does a similar thing.
+
 ## Todo/Review
 
 Currently the method used to split the individual strings
