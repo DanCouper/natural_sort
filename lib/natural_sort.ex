@@ -39,8 +39,8 @@ defmodule NaturalSort do
     iex> NaturalSort.sort(["x2-y7", "x8-y8", "x2-y08", "x2-g8" ])
     ["x2-g8", "x2-y7", "x2-y08", "x8-y8" ]
 
-    iex> NaturalSort.sort(["foo03.z", "foo45.D", "foo06.A", "foo"], true)
-    ["foo", "foo03.z", "foo06.A", "foo45.D"]
+    NaturalSort.sort(["foo03.z", "foo45.D", "foo06.a", "foo06.A", "foo"],, true)
+    ["foo", "foo03.z", "foo06.A", "foo06.a", "foo45.D"]
   """
 
   def sort([]), do: []

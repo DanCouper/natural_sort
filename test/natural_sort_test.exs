@@ -69,8 +69,8 @@ defmodule NaturalSortTest do
   # ################################
 
   test "should take case into account if flag is turned on" do
-    unsorted = ["foo03.z", "foo45.D", "foo06.A", "foo"]
-    sorted   = ["foo", "foo03.z", "foo06.A", "foo45.D"]
+    unsorted = ["foo03.z", "foo45.D", "foo06.a", "foo06.A", "foo"]
+    sorted   = ["foo", "foo03.z", "foo06.A", "foo06.a", "foo45.D"]
     assert NaturalSort.sort(unsorted, true) == sorted
   end
 
