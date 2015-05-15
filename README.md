@@ -74,7 +74,7 @@ shatters the strings in a consistent manner.
 Currently, it works thusly:
 ```
 > "123"
-[123]
+123
 # String is a valid integer, return it as an integer
 
 > "foo123"
@@ -85,8 +85,8 @@ Currently, it works thusly:
 # End of string, return result
 
 > "  foo123  fOO456_#06"
-["  foo123  foo456_#06"] # downcase
-["foo123foo456_#06"] # remove whitespace
+"  foo123  foo456_#06" # downcase
+"foo123foo456_#06" # remove whitespace
 ["foo", "123foo456_#06"] # isolate initial group
 ["123foo456_#06", "foo"] # reverse
 [["123", "foo456_#06"], "foo"] # head |> isolate initial group
