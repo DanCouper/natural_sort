@@ -95,27 +95,27 @@ defmodule NaturalSortTest do
 
   #######################################
 
-  test "further sorting tests 1 from https://github.com/versioneye/naturalsorter" do
+  test "should pass further sorting tests 1 from https://github.com/versioneye/naturalsorter" do
     assert NaturalSort.sort(["c", "b", "a"]) == ["a", "b", "c"]
   end
 
-  test "further sorting tests 2 from https://github.com/versioneye/naturalsorter" do
+  test "should pass further sorting tests 2 from https://github.com/versioneye/naturalsorter" do
     assert NaturalSort.sort(["2.2.1-b03", "2.2"]) == ["2.2", "2.2.1-b03"]
   end
 
-  test "further sorting tests 3 from https://github.com/versioneye/naturalsorter" do
+  test "should pass further sorting tests 3 from https://github.com/versioneye/naturalsorter" do
     assert NaturalSort.sort(["a400", "a5", "a1"]) == ["a1", "a5", "a400"]
   end
 
-  test "further sorting tests 4 from https://github.com/versioneye/naturalsorter" do
+  test "should pass further sorting tests 4 from https://github.com/versioneye/naturalsorter" do
     assert NaturalSort.sort(["1.5.2", "1.4.4", "1.5.2-patch"]) == ["1.4.4", "1.5.2", "1.5.2-patch"]
   end
 
-  test "further sorting tests 6 from https://github.com/versioneye/naturalsorter" do
+  test "should pass further sorting tests 6 from https://github.com/versioneye/naturalsorter" do
     assert NaturalSort.sort(["a400", "a5", "a1"]) == ["a1", "a5", "a400"]
   end
 
-  test "further sorting tests 7 from https://github.com/versioneye/naturalsorter" do
+  test "should pass further sorting tests 7 from https://github.com/versioneye/naturalsorter" do
     assert NaturalSort.sort(["1.5.2-patch", "1.5.2", "1.4.4"]) == ["1.4.4", "1.5.2", "1.5.2-patch"]
   end
 end
