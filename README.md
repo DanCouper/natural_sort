@@ -1,5 +1,6 @@
 NaturalSort
 ===========
+*I'm fairly new to Elixir, so this is but a first stab at making a Real Thing (albeit a very small Real Thing). It is useful for me (it works), but it needs some attention, and is almost certainly works in a less-than-optimal-manner.*
 
 Sort a list of strings containing numbers in a natural manner.
 
