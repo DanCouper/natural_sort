@@ -79,8 +79,8 @@ defmodule NaturalSort do
 
   ##################################################
 
-  def format_item(item, case_sensitive?) when is_number(item), do: item
-  def format_item(item, case_sensitive?) do
+  defp format_item(item, case_sensitive?) when is_number(item), do: item
+  defp format_item(item, case_sensitive?) do
     item
     |> format_case(case_sensitive?)
     # NOTE uses [relatively slow] unicode flag in regex.
