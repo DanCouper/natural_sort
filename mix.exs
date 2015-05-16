@@ -3,7 +3,7 @@ defmodule NaturalSort.Mixfile do
 
   def project do
     [app: :natural_sort,
-     version: "0.2.1",
+     version: "0.2.2",
      elixir: "~> 1.0",
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
@@ -18,7 +18,11 @@ defmodule NaturalSort.Mixfile do
   end
 
   defp deps do
-    []
+    [
+      {:ex_doc, "~> 0.7", only: :docs},
+      {:benchfella, "~> 0.2", only: :test},
+      {:faker, "~> 0.5", only: :test}
+    ]
   end
 
   defp description do

@@ -36,13 +36,13 @@ defmodule NaturalSort do
   of strings and integers. Once in this form, applying the
   sort function results in a correctly sorted list.
 
-  ## Examples
+    ## Examples
 
-    iex> NaturalSort.sort(["x2-y7", "x8-y8", "x2-y08", "x2-g8" ])
-    ["x2-g8", "x2-y7", "x2-y08", "x8-y8" ]
+      iex> NaturalSort.sort(["x2-y7", "x8-y8", "x2-y08", "x2-g8" ])
+      ["x2-g8", "x2-y7", "x2-y08", "x8-y8" ]
 
-    NaturalSort.sort(["foo03.z", "foo45.D", "foo06.a", "foo06.A", "foo"], true)
-    ["foo", "foo03.z", "foo06.A", "foo06.a", "foo45.D"]
+      NaturalSort.sort(["foo03.z", "foo45.D", "foo06.a", "foo06.A", "foo"], true)
+      ["foo", "foo03.z", "foo06.A", "foo06.a", "foo45.D"]
   """
 
   def sort([]), do: []
@@ -55,10 +55,10 @@ defmodule NaturalSort do
   An alias for `NaturalSort.sort`, which sorts ascending
   by default.
 
-  ## Examples
+    ## Examples
 
-    iex> NaturalSort.sort_asc(["x2-y7", "x8-y8", "x2-y08", "x2-g8" ])
-    ["x2-g8", "x2-y7", "x2-y08", "x8-y8"]
+      iex> NaturalSort.sort_asc(["x2-y7", "x8-y8", "x2-y08", "x2-g8" ])
+      ["x2-g8", "x2-y7", "x2-y08", "x8-y8"]
   """
   def sort_asc(list, case_sensitive? \\ false) do
     sort(list, case_sensitive?)
@@ -68,10 +68,10 @@ defmodule NaturalSort do
   Sorts a list in descending order, rather than ascending
   as is the default for `NaturalSort.sort`.
 
-  ## Examples
+    ## Examples
 
-    iex> NaturalSort.sort_desc(["a5", "a400", "a1"])
-    ["a400", "a5", "a1"]
+      iex> NaturalSort.sort_desc(["a5", "a400", "a1"])
+      ["a400", "a5", "a1"]
   """
 
   def sort_desc([]), do: []
