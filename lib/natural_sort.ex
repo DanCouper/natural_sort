@@ -24,6 +24,8 @@ defmodule NaturalSort do
   [Martin Pool's natural sorting algorithm](http://sourcefrog.net/projects/natsort/),
   making direct use of the Ruby implementation of the original
   C version.
+
+  Elixir's [Version](https://github.com/elixir-lang/elixir/blob/v1.0.4/lib/elixir/lib/version.ex#L1) module does a similar thing.
   """
 
 
@@ -39,7 +41,7 @@ defmodule NaturalSort do
     iex> NaturalSort.sort(["x2-y7", "x8-y8", "x2-y08", "x2-g8" ])
     ["x2-g8", "x2-y7", "x2-y08", "x8-y8" ]
 
-    NaturalSort.sort(["foo03.z", "foo45.D", "foo06.a", "foo06.A", "foo"],, true)
+    NaturalSort.sort(["foo03.z", "foo45.D", "foo06.a", "foo06.A", "foo"], true)
     ["foo", "foo03.z", "foo06.A", "foo06.a", "foo45.D"]
   """
 
