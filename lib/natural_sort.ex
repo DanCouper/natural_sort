@@ -27,7 +27,10 @@ defmodule NaturalSort do
   """
 
   alias NaturalSort.FormatViaRecursion
+  alias NaturalSort.FormatViaRecursion2
+
   alias NaturalSort.FormatViaScan
+  alias NaturalSort.FormatViaScan2
 
 
   @doc """
@@ -49,6 +52,15 @@ defmodule NaturalSort do
   def sort([]), do: []
   def sort(list, case_sensitive? \\ false) do
     Enum.sort_by(list, fn x -> FormatViaRecursion.format_item(x, case_sensitive?) end)
+  end
+
+  def sort_by_scan(list, case_sensitive? \\ false) do
+    Enum.sort_by(list, fn x -> FormatViaScan.format_item(x, case_sensitive?) end)
+  end
+
+  def sort_by_scan_2([]), do: []
+  def sort_by_scan_2(list, case_sensitive? \\ false) do
+    Enum.sort_by(list, fn x -> FormatViaScan2.format_item(x, case_sensitive?) end)
   end
 
 
