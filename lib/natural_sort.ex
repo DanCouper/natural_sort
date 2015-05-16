@@ -26,12 +26,6 @@ defmodule NaturalSort do
   C version.
   """
 
-  alias NaturalSort.FormatViaRecursion
-  alias NaturalSort.FormatViaRecursion2
-
-  alias NaturalSort.FormatViaScan
-  alias NaturalSort.FormatViaScan2
-
 
   @doc """
   Sorts a list of strings. This works by leveraging Elixir's
@@ -51,16 +45,7 @@ defmodule NaturalSort do
 
   def sort([]), do: []
   def sort(list, case_sensitive? \\ false) do
-    Enum.sort_by(list, fn x -> FormatViaRecursion.format_item(x, case_sensitive?) end)
-  end
-
-  def sort_by_scan(list, case_sensitive? \\ false) do
-    Enum.sort_by(list, fn x -> FormatViaScan.format_item(x, case_sensitive?) end)
-  end
-
-  def sort_by_scan_2([]), do: []
-  def sort_by_scan_2(list, case_sensitive? \\ false) do
-    Enum.sort_by(list, fn x -> FormatViaScan2.format_item(x, case_sensitive?) end)
+    Enum.sort_by(list, fn x -> format_item(x, case_sensitive?) end)
   end
 
 
@@ -89,12 +74,37 @@ defmodule NaturalSort do
   """
 
   def sort_desc(list, case_sensitive? \\ false) do
-    Enum.sort_by(list, fn x -> FormatViaRecursion.format_item(x, case_sensitive?) end, &>=/2)
+    Enum.sort_by(list, fn x -> format_item(x, case_sensitive?) end, &>=/2)
   end
 
   ##################################################
 
+  def format_item(item, case_sensitive?) when is_number(item), do: item
+  def format_item(item, case_sensitive?) do
+    item
+    |> format_case(case_sensitive?)
+    # NOTE uses [relatively slow] unicode flag in regex.
+    |> string_scan(~r/(\p{Nd}+)|(\p{L}+)/u)
+    |> List.flatten
+    |> Enum.map(fn item -> convert_integers(item) end)
+  end
 
+  defp format_case(item, case_sensitive?) do
+    case case_sensitive? do
+      true  -> item
+      false -> String.downcase(item)
+    end
+  end
+
+  defp convert_integers(string) do
+    # NOTE uses [relatively slow] unicode flag in regex.
+    case Regex.match?(~r/\p{Nd}+/u, string) do
+      true  -> String.to_integer(string)
+      false -> string
+    end
+  end
+
+  defp string_scan(string, regex), do: Regex.scan(regex, string, capture: :all_but_first)
 
   #############
 

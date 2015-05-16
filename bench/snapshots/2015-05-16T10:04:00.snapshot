@@ -1,8 +1,0 @@
-duration:1.0;mem stats:false;sys mem stats:false
-module;test;tags;iterations;elapsed
-NaturalSortBench	second natural sort using Regex.scan to break up the strings		100	1984971
-NaturalSortBench	natural sort using explicit recursion to break up the strings		50	2035066
-NaturalSortBench	natural sort using Regex.scan to break up the strings		50	1991400
-RegexFormatterBench	Original format function recursing through string		50000	1926287
-RegexFormatterBench	Optimised New format function using scan		100000	2355125
-RegexFormatterBench	New format function using scan		50000	2177964
