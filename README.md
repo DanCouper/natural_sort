@@ -1,8 +1,5 @@
 NaturalSort
 ===========
-*I'm fairly new to Elixir, so this is but a first stab at making a Real Thing (albeit a very small Real Thing). It is useful for me (it works), but it needs some attention, and almost certainly functions in a less-than-optimal-manner.*
-
----
 
 Sort a list of strings containing numbers in a natural manner.
 
@@ -74,4 +71,7 @@ Elixir's [Version](https://github.com/elixir-lang/elixir/blob/v1.0.4/lib/elixir/
 
 - REVIEW: Benchmark further.
 - ENHANCEMENT: Add options: case sensitive, unicode, strip whitespace.
-- TODO: Set up as Hex package.
+
+---
+
+*I'm fairly new to Elixir, so this is but a first stab at making a Real Thing (albeit a very small Real Thing). It is useful for me (it works), but it needs some attention, and almost certainly functions in a less-than-optimal-manner.*
