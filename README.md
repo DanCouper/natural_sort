@@ -72,52 +72,6 @@ Elixir's [Version](https://github.com/elixir-lang/elixir/blob/v1.0.4/lib/elixir/
 
 ## Todo/Review
 
-Currently the method used to split the individual strings
-is brute-force: I cannot concoct a regex that reliably
-shatters the strings in a consistent manner.
-
-Currently, it works thusly:
-```
-> "123"
-123
-# String is a valid integer, return it as an integer
-
-> "foo123"
-["foo", "123"] # isolate initial group
-["123", "foo"] # reverse
-# head |> isolate the initial group == head, so
-["foo", "123"] # reverse
-# End of string, return result
-
-> "  foo123  fOO456_#06"
-"  foo123  foo456_#06" # downcase
-"foo123foo456_#06" # remove whitespace
-["foo", "123foo456_#06"] # isolate initial group
-["123foo456_#06", "foo"] # reverse
-[["123", "foo456_#06"], "foo"] # head |> isolate initial group
-["foo", ["123", "foo456_#06"]] # reverse
-["foo", "123", "foo456_#06"] # flatten
-["foo456_#06", "123", "foo"] # reverse
-[["foo", "456_#06"], "123", "foo"] # head |> isolate initial group
-["foo", "123", ["foo", "456_#06"]] # reverse
-["foo", "123", "foo", "456_#06"] # flatten
-["456_#06", "foo", "123", "foo"] # reverse
-[["456", "_#06"], "foo", "123", "foo"] # head |> isolate initial group
-["foo", "123", "foo", ["456", "_#06"]] # reverse
-["foo", "123", "foo", "456", "_#06"] # flatten
-["_#06", "456", "foo", "123", "foo"] # reverse
-[["_#", "06"], "456", "foo", "123", "foo"] # head |> isolate initial group
-["foo", "123", "foo", "456", ["_#", "06"]] # reverse
-["foo", "123", "foo", "456", "_#", "06"] # flatten
-# End of string, stop recursing
-["foo", "123", "foo", "456", "06"] # remove punctuation groups
-["foo", 123, "foo", 456, 6] # convert number strings to numbers
-# return result
-```
-
-- NOTE: Floats won't work, but I think it would be impossible to
-  know in advance whether a number is a float or 2 numbers
-  delimited by a dot (eg a filename or a version).
-- TODO: Split private functions into a helper module, allowing:
-  detailed benchmarking and optimisation.
+- REVIEW: Benchmark further.
+- ENHANCEMENT: Add options: case sensitive, unicode, strip whitespace.
 - TODO: Set up as Hex package.
