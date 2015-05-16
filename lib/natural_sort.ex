@@ -60,7 +60,6 @@ defmodule NaturalSort do
     iex> NaturalSort.sort_asc(["x2-y7", "x8-y8", "x2-y08", "x2-g8" ])
     ["x2-g8", "x2-y7", "x2-y08", "x8-y8"]
   """
-
   def sort_asc(list, case_sensitive? \\ false) do
     sort(list, case_sensitive?)
   end
@@ -75,6 +74,7 @@ defmodule NaturalSort do
     ["a400", "a5", "a1"]
   """
 
+  def sort_desc([]), do: []
   def sort_desc(list, case_sensitive? \\ false) do
     Enum.sort_by(list, fn x -> format_item(x, case_sensitive?) end, &>=/2)
   end
