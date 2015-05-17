@@ -1,6 +1,10 @@
 NaturalSort
 ===========
 
+**NOTE v0.2 used an explicit second argument (`case_sensitive`).
+This has been removed and replaced with an options keyword list,
+this is a breaking change.**
+
 Sort a list of strings containing numbers in a natural manner.
 
 Sort functions will not [generally] sort strings containing
