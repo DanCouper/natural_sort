@@ -26,7 +26,9 @@ But applying a natural sort will give:
 
 ## Functions
 
-### `NaturalSort.sort(list, case_sensitive? \\ false)`
+Just the one:
+
+### `NaturalSort.sort(list, options \\ [])`
 
 Sorts a list of strings (ascending).
 This works by leveraging Elixir's
@@ -35,28 +37,30 @@ a mapping function). The mapping operation converts each string
 into a list of strings and integers. Once in this form, applying
 the sort function results in a correctly sorted list.
 
-```
-iex> NaturalSort.sort(["x2-y7", "x8-y8", "x2-y08", "x2-g8" ])
-["x2-g8", "x2-y7", "x2-y08", "x8-y8" ]
+#### Options
 
-iex> NaturalSort.sort(["foo03.z", "foo45.D", "foo06.a", "foo06.A", "foo"], true)
-["foo", "foo03.z", "foo06.A", "foo06.a", "foo45.D"]
-```
+There are currently two available options (passed as a
+keyword list), `:direction` and `case_sensitive`.
 
-### `NaturalSort.sort_asc(list, case_sensitive? \\ false)`
-
-Direct alias for `NaturalSort.sort(list, case_sensitive? \\ false)`.
+* `:direction` may have a value of `:asc` or `:desc`, and
+  defaults to `:asc`.
+* `:case_sensitive` may be `true` or `false`, and defaults
+  to `false`.
 
 
-### `NaturalSort.sort_desc(list, case_sensitive? \\ false)`
+#### Examples
 
-Sorts a list in descending order, rather than ascending
-as is the default for `NaturalSort.sort`.
+      iex> NaturalSort.sort(["x2-y7", "x8-y8", "x2-y08", "x2-g8" ])
+      ["x2-g8", "x2-y7", "x2-y08", "x8-y8" ]
 
-```
-iex> NaturalSort.sort_desc(["a5", "a400", "a1"])
-["a400", "a5", "a1"]
-```
+      iex> NaturalSort.sort(["a5", "a400", "a1"], direction: :desc)
+      ["a400", "a5", "a1"]
+
+      iex> NaturalSort.sort(["foo03.z", "foo45.D", "foo06.a", "foo06.A", "foo"], case_sensitive: :true)
+      ["foo", "foo03.z", "foo06.A", "foo06.a", "foo45.D"]
+
+      iex> NaturalSort.sort(["foo03.z", "foo45.D", "foo06.a", "foo06.A", "foo"], [case_sensitive: :true, direction: :desc])
+      ["foo45.D", "foo06.a", "foo06.A", "foo03.z", "foo"]
 
 ## Prior art:
 
@@ -70,8 +74,4 @@ Elixir's [Version](https://github.com/elixir-lang/elixir/blob/v1.0.4/lib/elixir/
 ## Todo/Review
 
 - REVIEW: Benchmark further.
-- ENHANCEMENT: Add options: case sensitive, unicode, strip whitespace.
-
----
-
-*I'm fairly new to Elixir, so this is but a first stab at making a Real Thing (albeit a very small Real Thing). It is useful for me (it works), but it needs some attention, and almost certainly functions in a less-than-optimal-manner.*
+- ENHANCEMENT: Add options: choice to use unicode, choice to strip whitespace from result.

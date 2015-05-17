@@ -36,50 +36,44 @@ defmodule NaturalSort do
   of strings and integers. Once in this form, applying the
   sort function results in a correctly sorted list.
 
-    ## Examples
+  ## Options
+
+  There are currently two available options (passed as a
+  keyword list), `:direction` and `case_sensitive`.
+
+  * `:direction` may have a value of `:asc` or `:desc`, and
+    defaults to `:asc`.
+  * `:case_sensitive` may be `true` or `false`, and defaults
+    to `false`.
+
+
+  ## Examples
 
       iex> NaturalSort.sort(["x2-y7", "x8-y8", "x2-y08", "x2-g8" ])
       ["x2-g8", "x2-y7", "x2-y08", "x8-y8" ]
 
-      NaturalSort.sort(["foo03.z", "foo45.D", "foo06.a", "foo06.A", "foo"], true)
+      iex> NaturalSort.sort(["a5", "a400", "a1"], direction: :desc)
+      ["a400", "a5", "a1"]
+
+      iex> NaturalSort.sort(["foo03.z", "foo45.D", "foo06.a", "foo06.A", "foo"], case_sensitive: :true)
       ["foo", "foo03.z", "foo06.A", "foo06.a", "foo45.D"]
+
+      iex> NaturalSort.sort(["foo03.z", "foo45.D", "foo06.a", "foo06.A", "foo"], [case_sensitive: :true, direction: :desc])
+      ["foo45.D", "foo06.a", "foo06.A", "foo03.z", "foo"]
   """
 
   def sort([]), do: []
-  def sort(list, case_sensitive? \\ false) do
-    Enum.sort_by(list, fn x -> format_item(x, case_sensitive?) end)
-  end
+  def sort(list, options \\ []) do
+    direction       = Keyword.get(options, :direction, :asc)
+    case_sensitive? = Keyword.get(options, :case_sensitive, false)
 
-
-  @doc """
-  An alias for `NaturalSort.sort`, which sorts ascending
-  by default.
-
-    ## Examples
-
-      iex> NaturalSort.sort_asc(["x2-y7", "x8-y8", "x2-y08", "x2-g8" ])
-      ["x2-g8", "x2-y7", "x2-y08", "x8-y8"]
-  """
-  def sort_asc(list, case_sensitive? \\ false) do
-    sort(list, case_sensitive?)
-  end
-
-  @doc """
-  Sorts a list in descending order, rather than ascending
-  as is the default for `NaturalSort.sort`.
-
-    ## Examples
-
-      iex> NaturalSort.sort_desc(["a5", "a400", "a1"])
-      ["a400", "a5", "a1"]
-  """
-
-  def sort_desc([]), do: []
-  def sort_desc(list, case_sensitive? \\ false) do
-    Enum.sort_by(list, fn x -> format_item(x, case_sensitive?) end, &>=/2)
+    Enum.sort_by(list,
+                 fn x -> format_item(x, case_sensitive?) end,
+                 sort_direction(direction))
   end
 
   ##################################################
+  # String -> List formatter
 
   defp format_item(item, case_sensitive?) when is_number(item), do: item
   defp format_item(item, case_sensitive?) do
@@ -89,13 +83,6 @@ defmodule NaturalSort do
     |> string_scan(~r/(\p{Nd}+)|(\p{L}+)/u)
     |> List.flatten
     |> Enum.map(fn item -> convert_integers(item) end)
-  end
-
-  defp format_case(item, case_sensitive?) do
-    case case_sensitive? do
-      true  -> item
-      false -> String.downcase(item)
-    end
   end
 
   defp convert_integers(string) do
@@ -108,7 +95,23 @@ defmodule NaturalSort do
 
   defp string_scan(string, regex), do: Regex.scan(regex, string, capture: :all_but_first)
 
-  #############
+  ##################################################
+  # Options
 
+  defp sort_direction(dir) do
+    case dir do
+      :asc  -> &<=/2
+      :desc -> &>=/2
+    end
+  end
+
+  defp format_case(item, case_sensitive?) do
+    case case_sensitive? do
+      true  -> item
+      false -> String.downcase(item)
+    end
+  end
+
+  ##################################################
 
 end
