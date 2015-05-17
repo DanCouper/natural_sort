@@ -65,32 +65,33 @@ defmodule NaturalSortTest do
     assert NaturalSort.sort(unsorted) == sorted
   end
 
-  # case_sensitive flag set to true:
+  # Options (default shown first):
+  # direction: :asc | :desc
+  # case_sensitive: false | true
   # ################################
 
   test "should take case into account if flag is turned on" do
     unsorted = ["foo03.z", "foo45.D", "foo06.a", "foo06.A", "foo"]
     sorted   = ["foo", "foo03.z", "foo06.A", "foo06.a", "foo45.D"]
-    assert NaturalSort.sort(unsorted, true) == sorted
+    assert NaturalSort.sort(unsorted, case_sensitive: true) == sorted
   end
 
-  # Alias':
-  #########
-
-  test "should sort ascending using the alias for the default sort" do
-    assert NaturalSort.sort_asc(["c", "b", "a"]) == ["a", "b", "c"]
-  end
-
-  test "should sort more complex strings using the sort_ascending alias" do
-    assert NaturalSort.sort_asc(["2.2.1-b03", "2.2"]) == ["2.2", "2.2.1-b03"]
+  test "should sort ascending (as default) if option explicitly set" do
+    assert NaturalSort.sort(["c", "b", "a"], direction: :asc) == ["a", "b", "c"]
   end
 
   test "should sort descending" do
-    assert NaturalSort.sort_desc(["c", "b", "a"]) == ["c", "b", "a"]
+    assert NaturalSort.sort(["c", "b", "a"], direction: :desc) == ["c", "b", "a"]
   end
 
   test "should sort descending with more complex strings" do
-    assert NaturalSort.sort_desc(["a5", "a400", "a1"]) == ["a400", "a5", "a1"]
+    assert NaturalSort.sort(["a5", "a400", "a1"], direction: :desc) == ["a400", "a5", "a1"]
+  end
+
+  test "should take multiple options into account if keyword list is used" do
+    unsorted = ["foo03.z", "foo45.D", "foo06.a", "foo06.A", "foo"]
+    sorted   = ["foo45.D", "foo06.a", "foo06.A", "foo03.z", "foo"]
+    assert NaturalSort.sort(unsorted, [case_sensitive: true, direction: :desc]) == sorted
   end
 
   #######################################
