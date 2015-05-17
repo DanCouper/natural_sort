@@ -79,3 +79,4 @@ Elixir's [Version](https://github.com/elixir-lang/elixir/blob/v1.0.4/lib/elixir/
 
 - REVIEW: Benchmark further.
 - ENHANCEMENT: Add options: choice to use unicode, choice to strip whitespace from result.
+- ENHANCEMENT: Stream rather than map - this was designed to aid me in organising vast amounts of files by name; mapping over large lists seems inefficient.
