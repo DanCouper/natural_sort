@@ -33,6 +33,9 @@ defmodule NaturalSort do
   @doc """
   Sorts a list of items using a provided mapping function that returns a string to
   sort by. See `Enum.sort_by/3` documentation for examples of mapping functions.
+
+  This allows sorting of arbitrary data structures (maps, structs, tuples, etc.)
+  by mapping them to a sortable key value.
   """
   @spec sort_by(list, (any -> String.t()), sort_options) :: list
   def sort_by(list, mapping_fun, options \\ [])
