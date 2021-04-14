@@ -90,6 +90,8 @@ defmodule NaturalSort do
   ##################################################
   # String -> List formatter
 
+  @spec format_item(item :: String.t() | number, case_sensitive? :: boolean) ::
+          String.t() | number
   defp format_item(item, _case_sensitive?) when is_number(item), do: item
 
   defp format_item(item, case_sensitive?) do
@@ -109,11 +111,13 @@ defmodule NaturalSort do
     end
   end
 
+  @spec string_scan(String.t(), Regex.t()) :: [[String.t()]]
   defp string_scan(string, regex), do: Regex.scan(regex, string, capture: :all_but_first)
 
   ##################################################
   # Options
 
+  @spec sort_direction(:asc | :desc) :: (any, any -> boolean)
   defp sort_direction(dir) do
     case dir do
       :asc -> &<=/2
@@ -121,6 +125,7 @@ defmodule NaturalSort do
     end
   end
 
+  @spec format_case(String.t(), boolean) :: String.t()
   defp format_case(item, case_sensitive?) do
     case case_sensitive? do
       true -> item
