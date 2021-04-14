@@ -28,6 +28,30 @@ defmodule NaturalSort do
   Elixir's [Version](https://github.com/elixir-lang/elixir/blob/v1.0.4/lib/elixir/lib/version.ex#L1) module does a similar thing.
   """
 
+  @type sort_options :: [{:direction, :asc | :desc}, {:case_sensitive?, boolean}]
+
+  @doc """
+  Sorts a list of items using a provided mapping function that returns a string to
+  sort by. See `Enum.sort_by/3` documentation for examples of mapping functions.
+
+  This allows sorting of arbitrary data structures (maps, structs, tuples, etc.)
+  by mapping them to a sortable key value.
+  """
+  @spec sort_by(list, (any -> String.t()), sort_options) :: list
+  def sort_by(list, mapping_fun, options \\ [])
+
+  def sort_by([], _mapping_fun, _options), do: []
+
+  def sort_by(list, mapping_fun, options) do
+    direction = Keyword.get(options, :direction, :asc)
+    case_sensitive? = Keyword.get(options, :case_sensitive, false)
+
+    Enum.sort_by(
+      list,
+      fn x -> format_item(mapping_fun.(x), case_sensitive?) end,
+      sort_direction(direction)
+    )
+  end
 
   @doc """
   Sorts a list of strings. This works by leveraging Elixir's
@@ -61,57 +85,56 @@ defmodule NaturalSort do
       iex> NaturalSort.sort(["foo03.z", "foo45.D", "foo06.a", "foo06.A", "foo"], [case_sensitive: :true, direction: :desc])
       ["foo45.D", "foo06.a", "foo06.A", "foo03.z", "foo"]
   """
-
-  def sort([]), do: []
+  @spec sort(list, sort_options) :: list
   def sort(list, options \\ []) do
-    direction       = Keyword.get(options, :direction, :asc)
-    case_sensitive? = Keyword.get(options, :case_sensitive, false)
-
-    Enum.sort_by(list,
-                 fn x -> format_item(x, case_sensitive?) end,
-                 sort_direction(direction))
+    sort_by(list, fn x -> x end, options)
   end
 
   ##################################################
   # String -> List formatter
 
-  defp format_item(item, case_sensitive?) when is_number(item), do: item
+  @spec format_item(item :: String.t() | number, case_sensitive? :: boolean) ::
+          String.t() | number
+  defp format_item(item, _case_sensitive?) when is_number(item), do: item
+
   defp format_item(item, case_sensitive?) do
     item
     |> format_case(case_sensitive?)
     # NOTE uses [relatively slow] unicode flag in regex.
     |> string_scan(~r/(\p{Nd}+)|(\p{L}+)/u)
-    |> List.flatten
+    |> List.flatten()
     |> Enum.map(fn item -> convert_integers(item) end)
   end
 
   defp convert_integers(string) do
     # NOTE uses [relatively slow] unicode flag in regex.
     case Regex.match?(~r/\p{Nd}+/u, string) do
-      true  -> String.to_integer(string)
+      true -> String.to_integer(string)
       false -> string
     end
   end
 
+  @spec string_scan(String.t(), Regex.t()) :: [[String.t()]]
   defp string_scan(string, regex), do: Regex.scan(regex, string, capture: :all_but_first)
 
   ##################################################
   # Options
 
+  @spec sort_direction(:asc | :desc) :: (any, any -> boolean)
   defp sort_direction(dir) do
     case dir do
-      :asc  -> &<=/2
+      :asc -> &<=/2
       :desc -> &>=/2
     end
   end
 
+  @spec format_case(String.t(), boolean) :: String.t()
   defp format_case(item, case_sensitive?) do
     case case_sensitive? do
-      true  -> item
+      true -> item
       false -> String.downcase(item)
     end
   end
 
   ##################################################
-
 end

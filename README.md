@@ -1,10 +1,6 @@
 NaturalSort
 ===========
 
-**NOTE v0.2 used an explicit second argument (`case_sensitive`).
-This has been removed and replaced with an options keyword list,
-this is a breaking change.**
-
 Sort a list of strings containing numbers in a natural manner.
 
 Sort functions will not [generally] sort strings containing
@@ -30,21 +26,22 @@ But applying a natural sort will give:
 
 ## Functions
 
-Just the one:
-
 ### `NaturalSort.sort(list, options \\ [])`
 
-Sorts a list of strings (ascending).
-This works by leveraging Elixir's
+Sorts a list of strings. This works by leveraging Elixir's
 `Enum.sort_by/3` function (which takes as the second argument
 a mapping function). The mapping operation converts each string
 into a list of strings and integers. Once in this form, applying
 the sort function results in a correctly sorted list.
 
-#### Options
+### `NaturalSort.sort_by(list, mapping_fun, options \\ [])`
 
-There are currently two available options (passed as a
-keyword list), `:direction` and `case_sensitive`.
+Works as `sort/2`, but accepts a custom mapping function which
+allows one to sort lists of arbitrary data structures such as maps
+or structs. The mapping function accepts one element and must
+return a string. See the Examples section below.
+
+#### Options
 
 * `:direction` may have a value of `:asc` or `:desc`, and
   defaults to `:asc`.
@@ -65,6 +62,9 @@ keyword list), `:direction` and `case_sensitive`.
 
       iex> NaturalSort.sort(["foo03.z", "foo45.D", "foo06.a", "foo06.A", "foo"], [case_sensitive: :true, direction: :desc])
       ["foo45.D", "foo06.a", "foo06.A", "foo03.z", "foo"]
+
+      iex> NaturalSort.sort_by([%{sortable: "1-20"}, %{sortable: "1-2"}, %{sortable: "10-20"}, %{sortable: "1-02"}], fn x -> x.sortable end)
+      [%{sortable: "1-2"}, %{sortable: "1-02"}, %{sortable: "1-20"}, %{sortable: "10-20"}]
 
 ## Prior art:
 
